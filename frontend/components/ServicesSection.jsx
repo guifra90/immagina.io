@@ -137,7 +137,7 @@ export default function ServicesSection() {
     }, { scope: sectionRef })
 
     return (
-        <section ref={sectionRef} className="relative min-h-screen bg-[#0a0a0a] overflow-hidden py-12 md:py-0">
+        <section id="services" ref={sectionRef} className="relative min-h-screen bg-[#0a0a0a] overflow-hidden py-12 md:py-0">
             {/* Header / Intro Overlay - Desktop Only or Different Mobile Position */}
             <div className="md:absolute top-12 left-6 md:left-12 z-20 pointer-events-none mix-blend-difference mb-8 md:mb-0">
                 <h2 className="text-white text-sm font-bold tracking-widest uppercase">

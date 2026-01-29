@@ -30,13 +30,13 @@ export default function Navbar() {
                     }`}
             >
                 <div className="container mx-auto px-6 flex justify-between items-center">
-                    <Link href="/" className="text-2xl font-display font-bold tracking-tighter uppercase text-white hover:text-primary transition-colors z-[102]">
+                    <Link href="#home" className="text-2xl font-display font-bold tracking-tighter uppercase text-white hover:text-primary transition-colors z-[102]">
                         IMMAGINA
                     </Link>
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex space-x-8">
-                        {['HOME', 'ABOUT', 'SERVICES', 'WORK', 'BLOGS'].map((item) => (
+                        {['ABOUT', 'SERVICES', 'WORK', 'CONTACT'].map((item) => (
                             <Link
                                 key={item}
                                 href={`#${item.toLowerCase()}`}
@@ -64,7 +64,7 @@ export default function Navbar() {
                     }`}
             >
                 <div className="flex flex-col space-y-8 text-center">
-                    {['HOME', 'ABOUT', 'SERVICES', 'WORK', 'BLOGS'].map((item, i) => (
+                    {['ABOUT', 'SERVICES', 'WORK', 'CONTACT'].map((item, i) => (
                         <Link
                             key={item}
                             href={`#${item.toLowerCase()}`}
