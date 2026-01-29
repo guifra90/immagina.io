@@ -1,5 +1,5 @@
 import './globals.css'
-import { Inter, Oswald } from 'next/font/google'
+import { Inter, Oswald, Cormorant_Garamond } from 'next/font/google'
 import SmoothScroll from '../components/SmoothScroll'
 import Navbar from '../components/Navbar'
 import CustomCursor from '../components/CustomCursor'
@@ -16,6 +16,14 @@ const oswald = Oswald({
   display: 'swap',
 })
 
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'], // Including light weights
+  style: ['normal', 'italic'],
+  variable: '--font-cormorant',
+  display: 'swap',
+})
+
 export const metadata = {
   title: 'Immagina.io | Design That Leaves a Mark',
   description: 'Building brands that look and feel better. AI-driven consultancy and creative design.',
@@ -23,7 +31,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="it" className={`${inter.variable} ${oswald.variable}`}>
+    <html lang="it" className={`${inter.variable} ${oswald.variable} ${cormorant.variable}`}>
       <body className="bg-[#111111] text-white antialiased">
         <SmoothScroll>
           <CustomCursor />

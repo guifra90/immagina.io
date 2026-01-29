@@ -16,6 +16,7 @@ module.exports = {
             fontFamily: {
                 sans: ['var(--font-inter)'],
                 display: ['var(--font-oswald)'],
+                elegant: ['var(--font-cormorant)'],
             },
         },
     },

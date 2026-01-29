@@ -107,7 +107,7 @@ const Hero = () => {
                             <div key={groupIndex} className="flex">
                                 {[...Array(4)].map((_, i) => (
                                     <span key={i} className="text-[25vw] md:text-[20vw] font-display font-light uppercase text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.6)] opacity-40 tracking-widest leading-none pr-[5vw]">
-                                        AI • Design Premium • Sviluppo Custom •
+                                        Design That Leaves a Mark •
                                     </span>
                                 ))}
                             </div>
@@ -120,19 +120,16 @@ const Hero = () => {
             <div className="relative z-10 w-full h-full max-w-[1600px] mx-auto px-6 md:px-12">
 
                 {/* Intro Content - Left Aligned */}
-                <div className="absolute top-1/2 -translate-y-1/2 left-6 md:left-12 max-w-lg z-30">
+                <div className="absolute top-1/2 -translate-y-1/2 left-6 md:left-12 max-w-3xl z-30">
                     <div ref={textRef}>
-                        <h2
-                            className="text-white text-4xl md:text-5xl font-bold mb-6 tracking-tight will-change-transform uppercase"
-                        >
-                            AI. <br />
-                            Design Visionario. <br />
-                            Impatto Reale.
+                        <h2 className="text-white mb-6 will-change-transform flex flex-row items-baseline gap-3 md:gap-5 flex-wrap">
+                            <span className="font-display font-bold uppercase text-6xl md:text-8xl tracking-tight leading-none">Digital</span>
+                            <span className="font-elegant italic font-light text-6xl md:text-8xl text-white/90 leading-none lowercase">soul.</span>
                         </h2>
                         <p
                             className="text-white/90 text-sm md:text-lg font-medium mb-8 leading-relaxed will-change-transform"
                         >
-                            Non siamo solo una software house. Siamo architetti digitali che fondono codice, AI e design per creare esperienze che lasciano il segno.
+                            Non scriviamo solo codice. Plasmiamo anime digitali.<br />Uniamo AI avanzata e design emotivo per creare prodotti che sembrano vivi.
                         </p>
 
                         <div className="will-change-transform">
