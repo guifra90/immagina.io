@@ -96,7 +96,7 @@ const Hero = () => {
             <div className="absolute inset-0 bg-black/10 pointer-events-none" />
 
             {/* Scrolling Marquee Text - Background Layer */}
-            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-full z-0 select-none pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] z-0 select-none pointer-events-none rotate-[-6deg] opacity-80">
                 <div className="flex overflow-hidden">
                     <div
                         ref={marqueeRef}
@@ -106,7 +106,7 @@ const Hero = () => {
                         {[...Array(2)].map((_, groupIndex) => (
                             <div key={groupIndex} className="flex">
                                 {[...Array(4)].map((_, i) => (
-                                    <span key={i} className="text-[20vw] font-display font-light uppercase text-transparent [-webkit-text-stroke:2px_white] opacity-30 tracking-widest leading-none pr-[5vw]">
+                                    <span key={i} className="text-[25vw] md:text-[20vw] font-display font-light uppercase text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.6)] opacity-40 tracking-widest leading-none pr-[5vw]">
                                         Design That Leaves a Mark
                                     </span>
                                 ))}
