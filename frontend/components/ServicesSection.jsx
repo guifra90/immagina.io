@@ -12,27 +12,27 @@ gsap.registerPlugin(ScrollTrigger)
 const services = [
     {
         id: '01',
-        title: 'Brand Identity',
-        description: 'We craft distinct visual languages that cut through the noise. Logos, typography, and systems that scale.',
+        title: 'Sviluppo AI-Native',
+        description: 'Web App, SaaS e piattaforme E-commerce potenziate da LLM. Creiamo software che non solo funziona, ma "pensa" e si adatta.',
         image: '/images/service-brand.jpg' // Placeholder, will fallback or use color
     },
     {
         id: '02',
-        title: 'Digital Experience',
-        description: 'Immersive websites and applications designed for impact. We merge performance with "Award-Winning" aesthetics.',
+        title: 'Strategic Design & UX',
+        description: 'Interfacce premiate che convertono. Dal branding all\'architettura dell\'informazione, progettiamo esperienze memorabili per i tuoi utenti.',
         image: '/images/service-digital.jpg'
     },
     {
         id: '03',
-        title: 'Motion & 3D',
-        description: 'Static is boring. We bring brands to life with fluid motion, 3D assets, and micro-interactions.',
-        image: '/images/service-motion.jpg'
+        title: 'Agenti AI & LLM Custom',
+        description: 'Automatizza processi complessi con agenti intelligenti su misura. Dall\'analisi dati al customer service, integriamo la potenza dei Large Language Models nel tuo flusso di lavoro.',
+        image: '/images/service-ai.jpg'
     },
     {
         id: '04',
-        title: 'AI Strategy',
-        description: 'Future-proofing your business with custom AI integration and generative workflows.',
-        image: '/images/service-ai.jpg'
+        title: 'Motion & Creative Tech',
+        description: 'Il statico è noioso. Diamo vita al tuo brand con animazioni fluide, 3D interattivo e micro-interazioni che catturano l\'attenzione.',
+        image: '/images/service-motion.jpg'
     }
 ]
 

@@ -73,14 +73,14 @@ export default function ContactSection() {
                     <h2
                         className="text-5xl md:text-7xl font-display font-bold uppercase tracking-tighter mb-8 opacity-0 will-change-transform"
                     >
-                        Let&apos;s Build <br />
-                        <span className="text-transparent stroke-white stroke-2">Something Real.</span>
+                        Trasformiamo <br />
+                        La Tua <span className="text-transparent stroke-white stroke-2">Visione.</span>
                     </h2>
 
                     <p
                         className="text-muted text-lg font-light leading-relaxed max-w-md mb-12 opacity-0 will-change-transform"
                     >
-                        Ready to elevate your brand? We are currently accepting new projects for Q3 2024. Tell us about your vision.
+                        Hai un progetto ambizioso? Siamo pronti ad ascoltare. Accettiamo nuove sfide per il prossimo trimestre. Parliamo di come l&apos;AI può far scalare il tuo business.
                     </p>
 
                     <div className="opacity-0 will-change-transform">

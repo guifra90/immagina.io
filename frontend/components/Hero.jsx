@@ -107,7 +107,7 @@ const Hero = () => {
                             <div key={groupIndex} className="flex">
                                 {[...Array(4)].map((_, i) => (
                                     <span key={i} className="text-[25vw] md:text-[20vw] font-display font-light uppercase text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.6)] opacity-40 tracking-widest leading-none pr-[5vw]">
-                                        Design That Leaves a Mark
+                                        AI • Design Premium • Sviluppo Custom •
                                     </span>
                                 ))}
                             </div>
@@ -123,19 +123,21 @@ const Hero = () => {
                 <div className="absolute top-1/2 -translate-y-1/2 left-6 md:left-12 max-w-lg z-30">
                     <div ref={textRef}>
                         <h2
-                            className="text-white text-4xl md:text-5xl font-bold mb-6 tracking-tight will-change-transform"
+                            className="text-white text-4xl md:text-5xl font-bold mb-6 tracking-tight will-change-transform uppercase"
                         >
-                            Create. Inspire. <br /> Impact.
+                            AI. <br />
+                            Design Visionario. <br />
+                            Impatto Reale.
                         </h2>
                         <p
                             className="text-white/90 text-sm md:text-lg font-medium mb-8 leading-relaxed will-change-transform"
                         >
-                            We create purposeful designs that inspire emotion, spark connection, and leave a lasting mark — blending creativity, strategy, and storytelling.
+                            Non siamo solo una software house. Siamo architetti digitali che fondono codice, AI e design per creare esperienze che lasciano il segno.
                         </p>
 
                         <div className="will-change-transform">
                             <button className="bg-white text-[#d63031] px-8 py-3.5 font-bold text-sm tracking-widest hover:bg-gray-100 transition-all uppercase rounded-full shadow-lg">
-                                Get Started
+                                Inizia il Progetto
                             </button>
                         </div>
                     </div>

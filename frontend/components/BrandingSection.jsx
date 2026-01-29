@@ -91,20 +91,20 @@ export default function BrandingSection() {
                         <h2
                             className="text-5xl md:text-7xl font-display font-bold uppercase leading-none opacity-0 will-change-transform"
                         >
-                            Building Brands <br />
-                            That Look And <br />
-                            <span className="text-primary">Feel Better.</span>
+                            Diamo Forma Al <br />
+                            Futuro Del <br />
+                            <span className="text-primary">Digitale.</span>
                         </h2>
                     </div>
 
                     <p
                         className="text-muted text-lg font-light leading-relaxed max-w-xl opacity-0 will-change-transform"
                     >
-                        We are a creative consultancy that bridges the gap between artificial intelligence and human creativity. We help forward-thinking companies implement AI solutions that are not just functional, but emotionally resonant and visually stunning.
+                        Immagina.io nasce all&apos;intersezione tra creatività umana e potenza di calcolo. Aiutiamo aziende ambiziose a tradurre tecnologie complesse in prodotti digitali eleganti, scalabili e intuitivi. Dove gli altri vedono solo codice, noi vediamo opportunità di business e bellezza funzionale.
                     </p>
 
                     <ul className="space-y-4 pt-4 border-t border-white/10 opacity-0 will-change-transform">
-                        {['AI Strategy & Implementation', 'Creative Direction', 'Immersive Web Experiences'].map((item, i) => (
+                        {['Digital Transformation & AI', 'Design System & UI/UX Premium', 'Sviluppo Web & Applicazioni Scalabili'].map((item, i) => (
                             <li
                                 key={i}
                                 className="flex items-center space-x-3 text-white/80"
