@@ -75,8 +75,8 @@ export default function Template({ children }) {
                 ))}
             </div>
 
-            {/* Logo Container - Absolute Centered */}
-            <div className="fixed inset-0 z-[100001] flex items-center justify-center pointer-events-none">
+            {/* Logo Container - Absolute Centered - FIXED Z-INDEX */}
+            <div className="fixed inset-0 z-[1000000] flex items-center justify-center pointer-events-none">
                 <div className="px-4">
                     <h1
                         ref={textRef}
