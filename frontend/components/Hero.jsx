@@ -1,0 +1,163 @@
+import { useRef } from 'react';
+import Image from 'next/image';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import dynamic from 'next/dynamic';
+
+// Dynamic import to avoid hydration errors with R3F
+const HeroCanvas = dynamic(() => import('./HeroCanvas'), {
+    ssr: false,
+    loading: () => <div className="absolute inset-0 bg-[#d63031]" />
+});
+
+gsap.registerPlugin(ScrollTrigger);
+
+const Hero = () => {
+    const containerRef = useRef(null);
+    const marqueeRef = useRef(null);
+    const textRef = useRef(null);
+    const imageRef = useRef(null);
+
+    useGSAP(() => {
+        // Velocity-based Marquee
+        const baseDuration = 100; // Slower base speed
+        let activeDuration = baseDuration;
+
+        // Create the infinite loop tween
+        const marqueeTween = gsap.to(marqueeRef.current, {
+            xPercent: -50,
+            repeat: -1,
+            duration: 100, // Base speed (adjusted for smoothness)
+            ease: "none",
+        });
+
+        // Update speed on scroll
+        ScrollTrigger.create({
+            trigger: document.body,
+            start: "top top",
+            end: "bottom bottom",
+            onUpdate: (self) => {
+                const velocity = Math.abs(self.getVelocity());
+                // Map velocity to speed multiplier (Base 1 + boost)
+                const speedMultiplier = 1 + (velocity / 100);
+
+                gsap.to(marqueeTween, {
+                    timeScale: speedMultiplier,
+                    duration: 0.5,
+                    overwrite: "auto",
+                    ease: "power1.out"
+                });
+
+                // Return to base speed
+                gsap.to(marqueeTween, {
+                    timeScale: 1,
+                    duration: 1.5,
+                    delay: 0.5,
+                    overwrite: "auto",
+                    ease: "power2.out"
+                });
+            }
+        });
+
+        // Explicitly ensuring autoAlpha for FOUC prevention
+        const textElements = textRef.current.children;
+        gsap.set(textElements, { autoAlpha: 0, y: 50 }); // Set initial state immediately
+
+        gsap.to(textElements, {
+            y: 0,
+            autoAlpha: 1,
+            duration: 1.2,
+            stagger: 0.1,
+            delay: 0.2, // Checkpoint: Reduced delay
+            ease: "power3.out"
+        });
+
+        // Image Reveal (Slide Up + Scale)
+        gsap.set(imageRef.current, { autoAlpha: 0, y: 50, scale: 0.95 });
+        gsap.to(imageRef.current, {
+            y: 0,
+            autoAlpha: 1,
+            scale: 1,
+            duration: 1.2,
+            ease: "power3.out",
+            delay: 0.4
+        });
+
+    }, { scope: containerRef });
+
+    return (
+        <section id="home" ref={containerRef} className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-[#0f172a] via-[#2d0b33] to-[#4a0404]">
+            {/* 3D Background */}
+            <HeroCanvas />
+
+            {/* Gradient Overlay matching VR Image (Dominant Red at Bottom Right) */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#8e44ad]/20 via-[#c0392b]/30 to-[#ff0000]/40 mix-blend-overlay pointer-events-none" />
+            <div className="absolute inset-0 bg-black/10 pointer-events-none" />
+
+            {/* Scrolling Marquee Text - Background Layer */}
+            <div className="absolute top-1/2 left-0 -translate-y-1/2 w-full z-0 select-none pointer-events-none">
+                <div className="flex overflow-hidden">
+                    <div
+                        ref={marqueeRef}
+                        className="flex whitespace-nowrap will-change-transform transform-gpu"
+                    >
+                        {/* Duplicated text for seamless loop */}
+                        {[...Array(2)].map((_, groupIndex) => (
+                            <div key={groupIndex} className="flex">
+                                {[...Array(4)].map((_, i) => (
+                                    <span key={i} className="text-[20vw] font-display font-light uppercase text-transparent [-webkit-text-stroke:2px_white] opacity-30 tracking-widest leading-none pr-[5vw]">
+                                        Design That Leaves a Mark
+                                    </span>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Main Content Area */}
+            <div className="relative z-10 w-full h-full max-w-[1600px] mx-auto px-6 md:px-12">
+
+                {/* Intro Content - Left Aligned */}
+                <div className="absolute top-1/2 -translate-y-1/2 left-6 md:left-12 max-w-lg z-30">
+                    <div ref={textRef}>
+                        <h2
+                            className="text-white text-4xl md:text-5xl font-bold mb-6 tracking-tight will-change-transform"
+                        >
+                            Create. Inspire. <br /> Impact.
+                        </h2>
+                        <p
+                            className="text-white/90 text-sm md:text-lg font-medium mb-8 leading-relaxed will-change-transform"
+                        >
+                            We create purposeful designs that inspire emotion, spark connection, and leave a lasting mark — blending creativity, strategy, and storytelling.
+                        </p>
+
+                        <div className="will-change-transform">
+                            <button className="bg-white text-[#d63031] px-8 py-3.5 font-bold text-sm tracking-widest hover:bg-gray-100 transition-all uppercase rounded-full shadow-lg">
+                                Get Started
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Hero Image - Bottom Right */}
+                <div
+                    ref={imageRef}
+                    className="absolute bottom-0 right-[-20%] md:right-0 h-[60%] md:h-[85%] w-[140%] md:w-[60%] lg:w-[50%] z-10 flex items-end justify-end pointer-events-none will-change-transform"
+                >
+                    <Image
+                        src="/images/hero-vr-glass.png"
+                        alt="Futuristic VR Experience"
+                        width={900}
+                        height={1100}
+                        className="object-contain object-bottom w-full h-full"
+                        priority
+                    />
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default Hero;
