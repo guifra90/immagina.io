@@ -65,8 +65,8 @@ export default function Template({ children }) {
     return (
         <div ref={containerRef}>
             {/* Shutter Overlay */}
-            <div className="fixed inset-0 z-[9999] pointer-events-none flex flex-row h-screen w-full">
-                {/* 5 Vertical Shutters */}
+            <div className="fixed inset-0 z-[999999] pointer-events-none grid grid-cols-5 h-screen w-full">
+                {/* 5 Vertical Shutters - Grid Layout */}
                 {[...Array(5)].map((_, i) => (
                     <div
                         key={i}
@@ -76,7 +76,7 @@ export default function Template({ children }) {
             </div>
 
             {/* Logo Container - Absolute Centered */}
-            <div className="fixed inset-0 z-[10000] flex items-center justify-center pointer-events-none">
+            <div className="fixed inset-0 z-[100001] flex items-center justify-center pointer-events-none">
                 <div className="px-4">
                     <h1
                         ref={textRef}

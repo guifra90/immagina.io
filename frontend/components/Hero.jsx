@@ -1,3 +1,5 @@
+'use client';
+
 import { useRef } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
@@ -7,8 +9,7 @@ import dynamic from 'next/dynamic';
 
 // Dynamic import to avoid hydration errors with R3F
 const HeroCanvas = dynamic(() => import('./HeroCanvas'), {
-    ssr: false,
-    loading: () => <div className="absolute inset-0 bg-[#d63031]" />
+    ssr: false
 });
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,10 +17,19 @@ gsap.registerPlugin(ScrollTrigger);
 const Hero = () => {
     const containerRef = useRef(null);
     const marqueeRef = useRef(null);
+    const marqueeWrapperRef = useRef(null);
     const textRef = useRef(null);
     const imageRef = useRef(null);
 
     useGSAP(() => {
+        // Reveal Marquee
+        gsap.to(marqueeWrapperRef.current, {
+            opacity: 0.8,
+            duration: 1.5,
+            ease: "power2.out",
+            delay: 0.5
+        });
+
         // Velocity-based Marquee
         const baseDuration = 100; // Slower base speed
         let activeDuration = baseDuration;
@@ -87,7 +97,14 @@ const Hero = () => {
     }, { scope: containerRef });
 
     return (
-        <section id="home" ref={containerRef} className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-[#0f172a] via-[#2d0b33] to-[#4a0404]">
+        <section
+            id="home"
+            ref={containerRef}
+            className="relative w-full h-screen overflow-hidden bg-gradient-to-br from-[#0f172a] via-[#2d0b33] to-[#4a0404]"
+            style={{
+                background: 'linear-gradient(to bottom right, #0f172a, #2d0b33, #4a0404)'
+            }}
+        >
             {/* 3D Background */}
             <HeroCanvas />
 
@@ -96,7 +113,7 @@ const Hero = () => {
             <div className="absolute inset-0 bg-black/10 pointer-events-none" />
 
             {/* Scrolling Marquee Text - Background Layer */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] z-0 select-none pointer-events-none rotate-[-6deg] opacity-80">
+            <div ref={marqueeWrapperRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] z-0 select-none pointer-events-none rotate-[-6deg] opacity-0">
                 <div className="flex overflow-hidden">
                     <div
                         ref={marqueeRef}
@@ -122,17 +139,17 @@ const Hero = () => {
                 {/* Intro Content - Left Aligned */}
                 <div className="absolute top-1/2 -translate-y-1/2 left-6 md:left-12 max-w-3xl z-30">
                     <div ref={textRef}>
-                        <h2 className="text-white mb-6 will-change-transform flex flex-row items-baseline gap-3 md:gap-5 flex-wrap">
+                        <h2 className="text-white mb-6 will-change-transform flex flex-row items-baseline gap-3 md:gap-5 flex-wrap opacity-0">
                             <span className="font-display font-bold uppercase text-6xl md:text-8xl tracking-tight leading-none">Digital</span>
                             <span className="font-elegant italic font-light text-6xl md:text-8xl text-white/90 leading-none lowercase">soul.</span>
                         </h2>
                         <p
-                            className="text-white/90 text-sm md:text-lg font-medium mb-8 leading-relaxed will-change-transform"
+                            className="text-white/90 text-sm md:text-lg font-medium mb-8 leading-relaxed will-change-transform opacity-0"
                         >
                             Non scriviamo solo codice. Plasmiamo anime digitali.<br />Uniamo AI avanzata e design emotivo per creare prodotti che sembrano vivi.
                         </p>
 
-                        <div className="will-change-transform">
+                        <div className="will-change-transform opacity-0">
                             <button className="bg-white text-[#d63031] px-8 py-3.5 font-bold text-sm tracking-widest hover:bg-gray-100 transition-all uppercase rounded-full shadow-lg">
                                 Inizia il Progetto
                             </button>
@@ -143,7 +160,7 @@ const Hero = () => {
                 {/* Hero Image - Bottom Right */}
                 <div
                     ref={imageRef}
-                    className="absolute bottom-0 right-[-20%] md:right-0 h-[60%] md:h-[85%] w-[140%] md:w-[60%] lg:w-[50%] z-10 flex items-end justify-end pointer-events-none will-change-transform"
+                    className="absolute bottom-0 right-[-20%] md:right-0 h-[60%] md:h-[85%] w-[140%] md:w-[60%] lg:w-[50%] z-10 flex items-end justify-end pointer-events-none will-change-transform opacity-0"
                 >
                     <Image
                         src="/images/hero-vr-glass.png"
