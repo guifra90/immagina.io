@@ -7,7 +7,9 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger)
+if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger)
+}
 
 const projects = [
     {
@@ -229,11 +231,12 @@ export default function WorkSection() {
 
                 {/* View All Button */}
                 <div className="flex justify-center mt-20">
-                    <button
-                        className="px-12 py-4 border border-white/20 text-white uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-500 hover:scale-105 active:scale-95 ease-out"
+                    <a
+                        href="/work"
+                        className="inline-block px-12 py-4 border border-white/20 text-white uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-500 hover:scale-105 active:scale-95 ease-out"
                     >
                         View All Projects
-                    </button>
+                    </a>
                 </div>
 
             </div>

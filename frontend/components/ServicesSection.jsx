@@ -20,7 +20,7 @@ const services = [
         id: '02',
         title: 'Strategic Design & UX',
         description: 'Interfacce premiate che convertono. Dal branding all\'architettura dell\'informazione, progettiamo esperienze memorabili per i tuoi utenti.',
-        image: '/images/service-strategic-design.png'
+        image: '/images/service-ux-vertical.png'
     },
     {
         id: '03',
@@ -181,7 +181,8 @@ export default function ServicesSection() {
                                     src={service.image}
                                     alt={service.title}
                                     fill
-                                    className="object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-700"
+                                    className="object-cover w-full h-full opacity-60 group-hover:opacity-80 transition-opacity duration-700"
+                                    sizes="(max-width: 768px) 100vw, 600px"
                                 />
                             </div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-500" />

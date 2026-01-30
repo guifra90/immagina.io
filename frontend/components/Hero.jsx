@@ -150,9 +150,9 @@ const Hero = () => {
                         </p>
 
                         <div className="will-change-transform opacity-0">
-                            <button className="bg-white text-[#d63031] px-8 py-3.5 font-bold text-sm tracking-widest hover:bg-gray-100 transition-all uppercase rounded-full shadow-lg">
+                            <a href="#contact" className="inline-block bg-white text-[#d63031] px-8 py-3.5 font-bold text-sm tracking-widest hover:bg-gray-100 transition-all uppercase rounded-full shadow-lg">
                                 Inizia il Progetto
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

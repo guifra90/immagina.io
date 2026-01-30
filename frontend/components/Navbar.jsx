@@ -49,13 +49,19 @@ export default function Navbar() {
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex space-x-8">
-                        {['ABOUT', 'SERVICES', 'WORK', 'CONTACT'].map((item) => (
+                        {[
+                            { name: 'ABOUT', path: '/about' },
+                            { name: 'SERVICES', path: '/#services' },
+                            { name: 'WORK', path: '/work' },
+                            { name: 'INSIGHTS', path: '/blog' },
+                            { name: 'CONTACT', path: '/#contact' }
+                        ].map((item) => (
                             <Link
-                                key={item}
-                                href={`#${item.toLowerCase()}`}
+                                key={item.name}
+                                href={item.path}
                                 className="text-sm font-sans tracking-widest hover:text-primary transition-colors text-gray-300"
                             >
-                                {item}
+                                {item.name}
                             </Link>
                         ))}
                     </div>
@@ -77,10 +83,16 @@ export default function Navbar() {
                     }`}
             >
                 <div className="flex flex-col space-y-8 text-center">
-                    {['ABOUT', 'SERVICES', 'WORK', 'CONTACT'].map((item, i) => (
+                    {[
+                        { name: 'ABOUT', path: '/about' },
+                        { name: 'SERVICES', path: '/#services' },
+                        { name: 'WORK', path: '/work' },
+                        { name: 'INSIGHTS', path: '/blog' },
+                        { name: 'CONTACT', path: '/#contact' }
+                    ].map((item, i) => (
                         <Link
-                            key={item}
-                            href={`#${item.toLowerCase()}`}
+                            key={item.name}
+                            href={item.path}
                             onClick={toggleMenu}
                             className="text-4xl font-display font-bold text-white hover:text-primary transition-colors tracking-tighter"
                             style={{
@@ -90,7 +102,7 @@ export default function Navbar() {
                                 transition: 'all 0.5s ease-out'
                             }}
                         >
-                            {item}
+                            {item.name}
                         </Link>
                     ))}
                 </div>

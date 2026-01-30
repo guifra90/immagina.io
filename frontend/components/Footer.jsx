@@ -25,10 +25,17 @@ export default function Footer() {
                     <div>
                         <h4 className="font-bold uppercase tracking-widest mb-6 text-sm">Sitemap</h4>
                         <ul className="space-y-4 text-muted text-sm">
-                            {['Home', 'About', 'Services', 'Work', 'Contact'].map((item) => (
-                                <li key={item}>
-                                    <Link href={`#${item.toLowerCase()}`} className="hover:text-primary transition-colors">
-                                        {item}
+                            {[
+                                { name: 'Home', path: '/' },
+                                { name: 'About', path: '/about' },
+                                { name: 'Services', path: '/#services' },
+                                { name: 'Work', path: '/work' },
+                                { name: 'Insights', path: '/blog' },
+                                { name: 'Contact', path: '/#contact' }
+                            ].map((item) => (
+                                <li key={item.name}>
+                                    <Link href={item.path} className="hover:text-primary transition-colors">
+                                        {item.name}
                                     </Link>
                                 </li>
                             ))}
