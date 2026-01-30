@@ -82,16 +82,19 @@ function StarField({ count = 5000 }) {
 }
 
 export default function HeroCanvas() {
-    return (
+    // Temporarily disabled due to production Three.js compatibility issues
+    // Will re-enable after fixing peer dependency conflicts
+    return null;
+
+    /* return (
         <div className="absolute inset-0 z-0 pointer-events-none">
             <Canvas
                 camera={{ position: [0, 0, 10], fov: 60 }} // Further back camera for depth
                 dpr={[1, 2]}
                 gl={{ antialias: true, alpha: true }}
             >
-                {/* Reduced density for cleaner "digital dust" look */}
                 <StarField count={1500} />
             </Canvas>
         </div>
-    )
+    ) */
 }

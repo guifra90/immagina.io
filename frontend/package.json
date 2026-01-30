@@ -2,6 +2,9 @@
     "name": "immagina-frontend",
     "version": "0.1.0",
     "private": true,
+    "engines": {
+        "node": ">=18.17.0"
+    },
     "scripts": {
         "dev": "next dev",
         "build": "next build",
@@ -11,7 +14,7 @@
     "dependencies": {
         "@gsap/react": "^2.1.2",
         "@react-three/drei": "^10.7.7",
-        "@react-three/fiber": "^8.17.10",
+        "@react-three/fiber": "^9.0.0",
         "@supabase/supabase-js": "^2.39.0",
         "@types/three": "^0.182.0",
         "clsx": "^2.1.1",

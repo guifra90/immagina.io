@@ -1,334 +1,295 @@
-# Deploy su Vercel
+# Deploy Frontend a Vercel
 
 ## Obiettivo
-Guidare il processo di deploy del frontend Next.js su Vercel, dalla configurazione iniziale al continuous deployment.
+Effettuare il deploy del frontend Next.js su Vercel in modo affidabile, evitando errori comuni e garantendo che il sito sia funzionante in produzione.
 
 ## Input
-- **Repository Git**: URL del repository (GitHub, GitLab, Bitbucket)
-- **Branch**: Branch da deployare (default: `main`)
-- **Environment Variables**: Variabili d'ambiente necessarie (API keys, ecc.)
+- Frontend Next.js funzionante in locale (`npm run dev` senza errori)
+- Repository Git aggiornato (optional, ma consigliato)
+- Account Vercel configurato
 
-## Prerequisiti
+## Output
+- Sito live su `https://immagina-io.vercel.app`
+- Zero errori console in produzione
+- Tutte le pagine funzionanti
+- Build logs puliti
 
-1. **Account Vercel**: Crea account su [vercel.com](https://vercel.com)
-2. **Git Repository**: Codice deve essere in un repository Git
-3. **Build Success**: `npm run build` deve passare localmente
+## Tool da Usare
+- Script: `node ../execution/vercel_deploy_check.js` - Verifica pre-deploy automatica
+- Script: `node ../execution/pre_deploy_check.js` - Check generali (lint, build, SEO)
+- Comando: `npx vercel --prod` - Deploy a Vercel
 
-## Processo di Deploy
+## Processo Step-by-Step
 
-### 1. Preparazione Pre-Deploy
-
-**Verifica che tutto funzioni**:
-```bash
-# Dalla cartella frontend
-npm run build
-npm run lint
-```
-
-**Esegui pre-deploy check** (se disponibile):
-```bash
-node ../execution/pre_deploy_check.js
-```
-
-**Commit e push**:
-```bash
-git add .
-git commit -m "Ready for deployment"
-git push origin main
-```
-
-### 2. Configurazione Vercel
-
-**Opzione A: Vercel CLI (Consigliato)**
+### 1. Pre-Deploy Checks
+Esegui lo script di verifica automatica:
 
 ```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Login
-vercel login
-
-# Deploy dalla cartella frontend
 cd frontend
-vercel
-
-# Segui il wizard:
-# - Link a Git repository? Yes
-# - Link to existing project? No (prima volta)
-# - Project name: immagina-io
-# - Directory: ./ (o frontend se sei nella root)
-# - Override settings? No
+node ../execution/vercel_deploy_check.js
 ```
 
-**Opzione B: Vercel Dashboard**
+Lo script verificherà:
+- ✅ Configurazione `next.config.js` corretta (NO `output: 'export'`)
+- ✅ `.npmrc` presente per peer dependencies
+- ✅ `vercel.json` configurato correttamente
+- ✅ Build locale funzionante
+- ✅ Zero console.log nel codice
+- ✅ Componenti Three.js disabilitati o con error boundary
 
-1. Vai su [vercel.com/new](https://vercel.com/new)
-2. Import Git Repository
-3. Seleziona il repository
-4. Configure Project:
-   - **Framework Preset**: Next.js
-   - **Root Directory**: `frontend` (se il progetto è in una subdirectory)
-   - **Build Command**: `npm run build` (auto-detect)
-   - **Output Directory**: `.next` (auto-detect)
-5. Click "Deploy"
+Se ci sono errori, lo script ti dirà esattamente cosa sistemare.
 
-### 3. Configurazione Environment Variables
+### 2. Build Test Locale
+Prima di deployare, SEMPRE testare il build in locale:
 
-**Su Vercel Dashboard**:
-1. Settings → Environment Variables
-2. Aggiungi variabili necessarie:
-
-```
-NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJxxx...
-```
-
-**Usando CLI**:
 ```bash
-vercel env add NEXT_PUBLIC_SUPABASE_URL
-# Inserisci il valore quando richiesto
+npm run build
 ```
 
-**⚠️ Important**: 
-- Variabili `NEXT_PUBLIC_*` sono esposte al client
-- Variabili senza prefisso sono server-side only
+**Tempo atteso**: 30-60 secondi (NON 322ms!)
 
-### 4. Domain Setup (Opzionale)
+**Verifica output**:
+- Tutte le route devono essere generate correttamente
+- Nessun errore di compilazione
+- File `.next/` creato (NON `out/`)
 
-**Custom Domain**:
-1. Vercel Dashboard → Settings → Domains
-2. Add Domain → `immagina.io`
-3. Configura DNS:
-   - Type: `A` Record
-   - Name: `@`
-   - Value: `76.76.21.21` (Vercel IP)
-   
-   oppure
-   
-   - Type: `CNAME`
-   - Name: `www`
-   - Value: `cname.vercel-dns.com`
+### 3. Test Build Locale
+Servi il build locale per testare:
 
-4. Attendi propagazione DNS (5-60 minuti)
-
-### 5. Verifica Deploy
-
-**Check Build Logs**:
-- Vercel Dashboard → Deployments → Latest
-- Verifica che il build sia verde ✅
-
-**Test del Sito**:
-- Apri l'URL fornito da Vercel (es: `immagina-io.vercel.app`)
-- Testa tutte le sezioni
-- Verifica animazioni
-- Check su mobile
-
-**Performance Check**:
 ```bash
-# Lighthouse audit
+npx serve@latest .next/standalone -l 3000
+# OPPURE
+npm run start
+```
+
+**Verifica**:
+- Homepage carica senza errori
+- Apri console browser: zero errori
+- Clicca su un progetto: funziona
+- Naviga indietro: funziona
+
+### 4. Deploy a Vercel
+
+#### Primo Deploy (Nuovo Progetto)
+```bash
+npx vercel --prod
+```
+
+**Rispondi**:
+- Set up and deploy? **Y**
+- Scope: `guifra90's projects`
+- Link to existing? **N** (se nuovo)
+- Project name: `immagina-io`
+- Directory: `./` (conferma)
+- Modify settings? **N**
+
+#### Deploy Successivi
+```bash
+npx vercel --prod
+```
+
+Deploy automatico, nessuna domanda.
+
+#### Deploy con Cache Pulita (se problemi)
+```bash
+npx vercel --prod --force
+```
+
+### 5. Monitoraggio Build
+Mentre il build è in corso:
+
+**Tempo atteso**: 30-60 secondi
+
+**Watch for**:
+- `Running "vercel build"` - OK
+- `Build Completed in /vercel/output [XYZms]` - Se < 10s, PROBLEMA!
+- `Deploying outputs...` - OK
+- `Deployment completed` - OK
+
+Se vedi `Build Completed in [...] [322ms]` → **PROBLEMA**: build non eseguito veramente!
+
+**Soluzione**:
+1. Vai su dashboard Vercel
+2. Settings → Build & Development Settings
+3. Verifica "Output Directory" sia **VUOTO**
+4. Redeploy
+
+### 6. Verifica Post-Deploy
+
+#### Immediate Check
+Apri https://immagina-io.vercel.app e verifica:
+- [ ] Homepage carica (non 404)
+- [ ] Nessun "Application error: a client-side exception has occurred"
+- [ ] Console browser: zero errori
+- [ ] Hero section visibile
+- [ ] Scroll down: tutte le sezioni visibili
+
+#### Deep Check
+- [ ] `/work` → Griglia progetti visibile
+- [ ] Click su progetto → Dettaglio carica
+- [ ] Logo → Ritorna home
+- [ ] Hamburger menu → Si apre
+- [ ] Scroll smooth funziona
+
+#### Performance Check (opzionale)
+```bash
 npx lighthouse https://immagina-io.vercel.app --view
 ```
 
-## Continuous Deployment
+Target scores:
+- Performance: > 85
+- Accessibility: > 95
+- Best Practices: > 95
+- SEO: > 95
 
-Una volta configurato, Vercel auto-deploya ad ogni push:
+## Errori Comuni e Soluzioni
 
-```bash
-git add .
-git commit -m "Update hero section"
-git push origin main
-# → Vercel deploya automaticamente
+### Errore 1: 404 su Tutti i Route
+**Sintomo**: Anche homepage mostra 404 Vercel
+
+**Causa**: Output Directory configurata male
+
+**Soluzione**:
+1. Dashboard Vercel → Project Settings
+2. Build & Development Settings
+3. Output Directory: **LASCIA VUOTO** (cancella se presente)
+4. Save
+5. Redeploy: `npx vercel --prod --force`
+
+### Errore 2: Build Troppo Veloce (< 10s)
+**Sintomo**: `Build Completed in /vercel/output [322ms]`
+
+**Causa**: Vercel usa cache corrotta o configurazione sbagliata
+
+**Soluzione**:
+1. Elimina progetto Vercel completamente
+2. `rm -rf .vercel` (locale)
+3. Ricrea: `npx vercel --prod` (nuovo setup)
+
+### Errore 3: Client-Side Exception (Three.js)
+**Sintomo**: "Application error: a client-side exception has occurred"
+
+**Causa**: Conflitto peer dependencies con `@react-three/fiber`
+
+**Soluzione**:
+- Verifica `HeroCanvas.jsx` ritorna `null`
+- Se necessario, commenta il componente
+- Redeploy
+
+### Errore 4: Peer Dependency Conflicts
+**Sintomo**: `npm install` fallisce con errori ERESOLVE
+
+**Soluzione**:
+- Verifica `.npmrc` contenga `legacy-peer-deps=true`
+- `npm install --legacy-peer-deps`
+- Verifica `package.json` versioni:
+  - `@react-three/fiber`: `^9.0.0`
+  - React: `^18.3.0`
+
+### Errore 5: Routes Manifest Not Found
+**Sintomo**: `Error: The file "/vercel/path0/out/routes-manifest.json" couldn't be found`
+
+**Causa**: `output: 'export'` in `next.config.js`
+
+**Soluzione**:
+- Rimuovi `output: 'export'` da `next.config.js`
+- Rimuovi `trailingSlash: true`
+- Rimuovi `images.unoptimized: true`
+- Usa configurazione standard Next.js
+
+## Configurazione File Corretta
+
+### next.config.js
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    reactStrictMode: true,
+    images: {
+        domains: [],
+    },
+}
+module.exports = nextConfig
 ```
 
-**Preview Deployments**:
-- Ogni branch/PR ottiene un URL di preview
-- Esempio: `immagina-io-git-feature-xyz.vercel.app`
-
-## Configurazione Avanzata
+**NO**:
+- ❌ `output: 'export'`
+- ❌ `trailingSlash: true`
+- ❌ `images.unoptimized: true`
 
 ### vercel.json
-
-Crea `frontend/vercel.json` per configurazioni custom:
-
 ```json
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": ".next",
-  "devCommand": "npm run dev",
-  "installCommand": "npm install",
-  "framework": "nextjs",
-  "regions": ["iad1"],
-  "headers": [
-    {
-      "source": "/images/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/old-page",
-      "destination": "/new-page",
-      "permanent": true
-    }
-  ]
+    "framework": "nextjs",
+    "regions": ["iad1"],
+    "headers": [...]
 }
 ```
 
-### Analytics
+**NO**:
+- ❌ `buildCommand`
+- ❌ `outputDirectory`
 
-**Vercel Analytics** (gratis per Hobby):
-1. Dashboard → Analytics → Enable
-2. Aggiungi al layout:
-
-```javascript
-import { Analytics } from '@vercel/analytics/react';
-
-export default function RootLayout({ children }) {
-  return (
-    <html>
-      <body>
-        {children}
-        <Analytics />
-      </body>
-    </html>
-  );
-}
+### .npmrc
+```
+legacy-peer-deps=true
 ```
 
-### Speed Insights
+**IMPORTANTE**: Questo file DEVE esistere!
 
-```bash
-npm i @vercel/speed-insights
-```
+## Rollback in Caso di Problemi
 
-```javascript
-import { SpeedInsights } from '@vercel/speed-insights/next';
-
-<SpeedInsights />
-```
-
-## Rollback
-
-Se un deploy rompe qualcosa:
-
+### Via Dashboard
 1. Vercel Dashboard → Deployments
-2. Trova il deployment precedente funzionante
-3. Click "Promote to Production"
+2. Trova deployment precedente funzionante
+3. Click "..." → Promote to Production
 
-Oppure via CLI:
+### Via CLI
 ```bash
 vercel rollback
 ```
 
-## Casi Limite
+## Continuous Deployment
 
-### Build Fallisce su Vercel ma Passa Localmente
+Una volta configurato, ogni `git push`:
+- ✅ Triggerà auto-deploy su Vercel
+- ✅ Branch/PR ottengono preview URL
+- ✅ Main branch → Production
 
-**Sintomo**: `Error: Command "npm run build" exited with 1`
+## Note Importanti
 
-**Cause comuni**:
-1. **Node version mismatch**
-   - Soluzione: Specifica in `package.json`:
-   ```json
-   "engines": {
-     "node": "18.x"
-   }
-   ```
+1. **Mai deployare senza build test locale** - Se `npm run build` fallisce localmente, fallirà anche su Vercel
+2. **Deployment Protection disabilitato** - Per accesso pubblico. Riabilita per staging.
+3. **Node version** - Vercel usa Node 18.17.0+, assicurati di essere compatibile
+4. **Three.js** - Se abiliti HeroCanvas, usa error boundary o lazy load
+5. **Watch build logs** - Build < 10s = problema garantito
 
-2. **Missing dependencies**
-   - Soluzione: Verifica `package.json` dependencies
+## Checklist Finale
 
-3. **Environment variables mancanti**
-   - Soluzione: Aggiungi su Vercel Dashboard
+Prima di considerare il deploy completo:
 
-### Immagini Non Si Caricano
+- [ ] Build locale eseguito con successo
+- [ ] Nessun console.log nel codice
+- [ ] Homepage carica senza errori
+- [ ] Tutte le route testate
+- [ ] Console browser pulita (zero errori)
+- [ ] Navigazione funzionante
+- [ ] Mobile responsivo verificato
+- [ ] Build time su Vercel > 30s
+- [ ] URL produzione funzionante
+- [ ] SEO files presenti (robots.txt, sitemap.xml)
 
-**Sintomo**: Broken image icons
+## Links Utili
 
-**Soluzione**: 
-- Verifica path (devono essere `/images/...` non `./images/...`)
-- Check che le immagini siano in `public/`
-- Enable Image Optimization in vercel.json se necessario
+- Dashboard: https://vercel.com/guifra90s-projects/immagina-io
+- Production: https://immagina-io.vercel.app
+- Deployments: https://vercel.com/guifra90s-projects/immagina-io/deployments
+- Docs Vercel Next.js: https://vercel.com/docs/frameworks/nextjs
 
-### Animazioni GSAP Non Funzionano
+## Timeline Atteso
 
-**Sintomo**: Elementi statici, no animazioni
+- Pre-deploy checks: 1-2 min
+- Build locale: 1 min
+- Deploy Vercel: 1-2 min
+- Verifica post-deploy: 2-3 min
 
-**Soluzione**:
-- Verifica che GSAP sia in `dependencies` (non `devDependencies`)
-- Check console errors per plugin mancanti
-
-### 404 su Route Dinamiche
-
-**Sintomo**: Pagine dinamiche ritornano 404
-
-**Soluzione**: Verifica `generateStaticParams()` per SSG
-
-## Checklist Deploy
-
-Pre-Deploy:
-- [ ] `npm run build` passa localmente
-- [ ] `npm run lint` passa
-- [ ] Tutte le immagini esistono
-- [ ] SEO metadata configurato
-- [ ] Commit e push su Git
-
-Durante Deploy:
-- [ ] Repository connesso a Vercel
-- [ ] Environment variables configurate
-- [ ] Build completa con successo
-- [ ] Preview URL funziona
-
-Post-Deploy:
-- [ ] Production URL accessibile
-- [ ] Tutte le sezioni caricate
-- [ ] Animazioni funzionanti
-- [ ] Mobile responsive
-- [ ] Performance accettabile (Lighthouse > 80)
-
-## Monitoraggio Post-Deploy
-
-**Metrics da monitorare**:
-1. **Core Web Vitals** (Vercel Speed Insights)
-   - LCP < 2.5s
-   - FID < 100ms
-   - CLS < 0.1
-
-2. **Build Times** (Vercel Dashboard)
-   - Target: < 2 minuti
-
-3. **Error Rates** (Vercel Logs)
-   - Nessun errore 500
-
-## Note
-
-- **Free Tier Limits** (Hobby):
-  - 100 GB bandwidth/month
-  - 100 build hours/month
-  - Generalmente sufficiente per portfolio
-
-- **Vercel Edge Network**:
-  - CDN globale automatico
-  - Nessuna config necessaria
-
-- **Automatic HTTPS**:
-  - SSL gratuito e automatico
-  - Nessuna configurazione necessaria
-
-## Tips
-
-1. **Use Preview Deployments**: Testa su branch prima di merge
-2. **Enable Protection**: Password protect preview deployments
-3. **Monitor Analytics**: Usa Vercel Analytics per capire traffico
-4. **Optimize Images**: Next.js Image Optimization è automatico
-
-## Riferimenti
-
-- [Vercel Docs](https://vercel.com/docs)
-- [Next.js Deployment](https://nextjs.org/docs/deployment)
-- [Vercel CLI](https://vercel.com/docs/cli)
+**Totale**: ~5-8 minuti per deploy completo e verificato
