@@ -11,10 +11,15 @@ if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger)
 }
 
+import Link from 'next/link'
+
+// ... imports ...
+
 const projects = [
     {
         id: 1,
         title: 'Neural Data Core',
+        slug: 'neural-data-core',
         category: 'Data Analytics',
         image: '/images/work-project-1.png',
         size: 'col-span-1 lg:col-span-2',
@@ -24,6 +29,7 @@ const projects = [
     {
         id: 2,
         title: 'Neon Tokyo',
+        slug: 'neon-tokyo',
         category: 'E-Commerce Branding',
         image: '/images/work-project-2.png',
         size: 'col-span-1',
@@ -33,6 +39,7 @@ const projects = [
     {
         id: 3,
         title: 'Aura Fashion',
+        slug: 'aura-fashion',
         category: 'Web Experience',
         image: '/images/work-project-3.png',
         size: 'col-span-1',
@@ -46,7 +53,7 @@ const ParallaxProject = ({ project, setHoveredProject }) => {
     const imageRef = useRef(null)
 
     useGSAP(() => {
-        // Parallax Effect
+        // ... GSAP code same as before ...
         gsap.fromTo(imageRef.current,
             { yPercent: -10 },
             {
@@ -61,8 +68,6 @@ const ParallaxProject = ({ project, setHoveredProject }) => {
             }
         )
 
-        // Reveal Animation (Award Style: Clip Path + Scale)
-        // We target the container for clip-path, and the image for initial scale
         gsap.set(containerRef.current, { clipPath: 'inset(100% 0% 0% 0%)' })
         gsap.set(imageRef.current, { scale: 1.2 })
 
@@ -76,26 +81,23 @@ const ParallaxProject = ({ project, setHoveredProject }) => {
 
         tl.to(containerRef.current, {
             clipPath: 'inset(0% 0% 0% 0%)',
-            autoAlpha: 1, // Ensure visibility
+            autoAlpha: 1,
             y: 0,
             duration: 1.5,
             ease: "power4.out"
         })
             .to(imageRef.current, {
-                scale: 1, // Settles to 1 (but parallax yPercent still active)
+                scale: 1,
                 duration: 1.5,
                 ease: "power3.out"
             }, "<")
     }, { scope: containerRef })
 
-    // Hover Animation for Scale & Skew (Premium feel)
     const handleMouseEnter = () => {
         setHoveredProject(project.id)
-
-        // Scale & Skew Effect
         gsap.to(imageRef.current, {
             scale: 1.1,
-            rotation: 2, // Slight tilt
+            rotation: 2,
             duration: 0.8,
             ease: "power3.out"
         })
@@ -118,42 +120,44 @@ const ParallaxProject = ({ project, setHoveredProject }) => {
             onMouseLeave={handleMouseLeave}
             className={`relative h-[500px] group overflow-hidden bg-gray-900 cursor-pointer ${project.size}`}
         >
-            {/* Scroll Parallax Image Container */}
-            <div className="absolute inset-0 w-full h-[120%] -top-[10%] will-change-transform">
-                <div ref={imageRef} className="relative w-full h-full">
-                    <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover transition-none" // Disable CSS transition to let GSAP handle it
-                    />
-                </div>
-            </div>
-
-            {/* Overlay Gradient */}
-            <div className={`absolute inset-0 bg-gradient-to-t ${project.color} opacity-0 group-hover:opacity-90 transition-opacity duration-700 ease-in-out`} />
-
-            {/* Content */}
-            <div className="absolute inset-0 p-8 flex flex-col justify-end translate-y-4 group-hover:translate-y-0 transition-transform duration-700 ease-[0.25,0.1,0.25,1]">
-                <span className="text-xs uppercase tracking-widest font-bold mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                    {project.category}
-                </span>
-                <div className="flex justify-between items-end">
-                    <h3 className="text-4xl font-display font-bold uppercase leading-none text-white drop-shadow-md">
-                        {project.title}
-                    </h3>
-                    <div className="bg-white text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-4 group-hover:translate-x-0">
-                        <ArrowUpRight className="w-6 h-6" />
+            <Link href={`/work/${project.slug}`} className="block w-full h-full">
+                {/* Scroll Parallax Image Container */}
+                <div className="absolute inset-0 w-full h-[120%] -top-[10%] will-change-transform">
+                    <div ref={imageRef} className="relative w-full h-full">
+                        <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            className="object-cover transition-none"
+                        />
                     </div>
                 </div>
 
-                {/* Reveal Description */}
-                <div className="h-0 group-hover:h-auto overflow-hidden transition-all duration-700 ease-[0.16,1,0.3,1]">
-                    <p className="mt-4 text-white/90 text-sm font-light max-w-sm">
-                        {project.description}
-                    </p>
+                {/* Overlay Gradient */}
+                <div className={`absolute inset-0 bg-gradient-to-t ${project.color} opacity-0 group-hover:opacity-90 transition-opacity duration-700 ease-in-out`} />
+
+                {/* Content */}
+                <div className="absolute inset-0 p-8 flex flex-col justify-end translate-y-4 group-hover:translate-y-0 transition-transform duration-700 ease-[0.25,0.1,0.25,1]">
+                    <span className="text-xs uppercase tracking-widest font-bold mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                        {project.category}
+                    </span>
+                    <div className="flex justify-between items-end">
+                        <h3 className="text-4xl font-display font-bold uppercase leading-none text-white drop-shadow-md">
+                            {project.title}
+                        </h3>
+                        <div className="bg-white text-black p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-4 group-hover:translate-x-0">
+                            <ArrowUpRight className="w-6 h-6" />
+                        </div>
+                    </div>
+
+                    {/* Reveal Description */}
+                    <div className="h-0 group-hover:h-auto overflow-hidden transition-all duration-700 ease-[0.16,1,0.3,1]">
+                        <p className="mt-4 text-white/90 text-sm font-light max-w-sm">
+                            {project.description}
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </Link>
         </div>
     );
 };

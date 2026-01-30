@@ -43,7 +43,7 @@ export default function Navbar() {
                     }`}
             >
                 <div className="container mx-auto px-6 flex justify-between items-center">
-                    <Link href="#home" className="text-2xl font-display font-bold tracking-tighter uppercase text-white hover:text-primary transition-colors z-[102]">
+                    <Link href="/" className="text-2xl font-display font-bold tracking-tighter uppercase text-white hover:text-primary transition-colors z-[102]">
                         IMMAGINA
                     </Link>
 
