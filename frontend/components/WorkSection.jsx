@@ -86,13 +86,14 @@ const ParallaxProject = ({ project, setHoveredProject }) => {
             }, "<")
     }, { scope: containerRef })
 
-    // Hover Animation for Scale
+    // Hover Animation for Scale & Skew (Premium feel)
     const handleMouseEnter = () => {
         setHoveredProject(project.id)
 
-        // Scale Effect (Premium feel)
+        // Scale & Skew Effect
         gsap.to(imageRef.current, {
             scale: 1.1,
+            rotation: 2, // Slight tilt
             duration: 0.8,
             ease: "power3.out"
         })
@@ -102,6 +103,7 @@ const ParallaxProject = ({ project, setHoveredProject }) => {
         setHoveredProject(null)
         gsap.to(imageRef.current, {
             scale: 1,
+            rotation: 0,
             duration: 0.8,
             ease: "power3.out"
         })

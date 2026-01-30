@@ -14,25 +14,25 @@ const services = [
         id: '01',
         title: 'Sviluppo AI-Native',
         description: 'Web App, SaaS e piattaforme E-commerce potenziate da LLM. Creiamo software che non solo funziona, ma "pensa" e si adatta.',
-        image: '/images/service-brand.jpg' // Placeholder, will fallback or use color
+        image: '/images/service-ai-native.png'
     },
     {
         id: '02',
         title: 'Strategic Design & UX',
         description: 'Interfacce premiate che convertono. Dal branding all\'architettura dell\'informazione, progettiamo esperienze memorabili per i tuoi utenti.',
-        image: '/images/service-digital.jpg'
+        image: '/images/service-strategic-design.png'
     },
     {
         id: '03',
         title: 'Agenti AI & LLM Custom',
         description: 'Automatizza processi complessi con agenti intelligenti su misura. Dall\'analisi dati al customer service, integriamo la potenza dei Large Language Models nel tuo flusso di lavoro.',
-        image: '/images/service-ai.jpg'
+        image: '/images/service-ai-agents.png'
     },
     {
         id: '04',
         title: 'Motion & Creative Tech',
         description: 'Il statico è noioso. Diamo vita al tuo brand con animazioni fluide, 3D interattivo e micro-interazioni che catturano l\'attenzione.',
-        image: '/images/service-motion.jpg'
+        image: '/images/service-motion-tech.png'
     }
 ]
 
@@ -94,21 +94,23 @@ export default function ServicesSection() {
 
                 // Parallax effect for images inside cards (Desktop Only)
                 cards.forEach(card => {
-                    const img = card.querySelector('.service-img');
-                    gsap.fromTo(img,
-                        { scale: 1.2 },
-                        {
-                            scale: 1,
-                            ease: "none",
-                            scrollTrigger: {
-                                trigger: card,
-                                containerAnimation: tween,
-                                start: "left right",
-                                end: "right left",
-                                scrub: true
+                    const img = card.querySelector('.service-img-container');
+                    if (img) {
+                        gsap.fromTo(img,
+                            { scale: 1.2 },
+                            {
+                                scale: 1,
+                                ease: "none",
+                                scrollTrigger: {
+                                    trigger: card,
+                                    containerAnimation: tween,
+                                    start: "left right",
+                                    end: "right left",
+                                    scrub: true
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 })
             },
 
@@ -172,19 +174,23 @@ export default function ServicesSection() {
                         key={service.id}
                         className="service-card relative flex-shrink-0 w-full md:w-[600px] h-[50vh] md:h-[70vh] rounded-2xl overflow-hidden bg-[#161616] group border border-white/5 hover:border-white/20 transition-colors duration-500"
                     >
-                        {/* Background Image / Placeholder Gradient */}
+                        {/* Background Image */}
                         <div className="absolute inset-0 overflow-hidden">
-                            <div className="service-img absolute inset-0 bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] w-full h-full" />
-                            {/* In real implementation, Image goes here
-                             <Image src={service.image} fill className="service-img object-cover opacity-50" />
-                             */}
-                            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+                            <div className="service-img-container absolute inset-0 w-full h-full">
+                                <Image
+                                    src={service.image}
+                                    alt={service.title}
+                                    fill
+                                    className="object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-700"
+                                />
+                            </div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90 group-hover:opacity-60 transition-opacity duration-500" />
                         </div>
 
                         {/* Content */}
                         <div className="relative h-full flex flex-col justify-between p-6 md:p-12 z-10">
                             <div className="flex justify-between items-start">
-                                <span className="text-5xl md:text-8xl font-display font-bold text-white/5 group-hover:text-white/20 transition-colors duration-500">
+                                <span className="text-5xl md:text-8xl font-display font-bold text-white/20 group-hover:text-white/40 transition-colors duration-500">
                                     {service.id}
                                 </span>
                                 <div className="bg-white/10 p-3 rounded-full backdrop-blur-md group-hover:bg-white group-hover:text-black transition-all duration-300">
@@ -193,10 +199,10 @@ export default function ServicesSection() {
                             </div>
 
                             <div className="transform md:translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                <h3 className="text-2xl md:text-5xl font-display font-bold uppercase text-white mb-4">
+                                <h3 className="text-2xl md:text-5xl font-display font-bold uppercase text-white mb-4 drop-shadow-lg">
                                     {service.title}
                                 </h3>
-                                <p className="text-gray-300 text-sm md:text-lg max-w-sm opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                                <p className="text-gray-200 text-sm md:text-lg max-w-sm opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 drop-shadow-md">
                                     {service.description}
                                 </p>
                             </div>

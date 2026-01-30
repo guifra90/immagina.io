@@ -126,7 +126,7 @@ export default function ContactSection() {
                                 <input
                                     type="text"
                                     required
-                                    className="w-full bg-black/40 border border-white/10 rounded-lg p-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-white/20"
+                                    className="w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-lg p-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 focus:bg-white/10 transition-all duration-300 placeholder:text-white/20"
                                     placeholder="John Doe"
                                 />
                             </div>
@@ -136,7 +136,7 @@ export default function ContactSection() {
                                 <input
                                     type="email"
                                     required
-                                    className="w-full bg-black/40 border border-white/10 rounded-lg p-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-white/20"
+                                    className="w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-lg p-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 focus:bg-white/10 transition-all duration-300 placeholder:text-white/20"
                                     placeholder="john@example.com"
                                 />
                             </div>
@@ -146,7 +146,7 @@ export default function ContactSection() {
                                 <textarea
                                     required
                                     rows={4}
-                                    className="w-full bg-black/40 border border-white/10 rounded-lg p-4 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-white/20"
+                                    className="w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-lg p-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 focus:bg-white/10 transition-all duration-300 placeholder:text-white/20 resize-none"
                                     placeholder="Tell us about your project..."
                                 />
                             </div>
